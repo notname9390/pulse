@@ -1,0 +1,53 @@
+(* Pulse Package Manager Demo - Main Entry Point *)
+
+(* Library declarations for URL-based imports *)
+libs = {
+    math_utils == "https://math-utils.pulse.dev",
+    web_framework == "https://web-framework.pulse.dev",
+    data_structures == "https://data-structs.pulse.dev"
+}
+
+(* Multi-target compilation declarations *)
+compile = native
+compile = win
+compile = linux
+compile = macos
+
+(* Main function demonstrating the features *)
+def main():
+    out("🚀 Pulse Package Manager Demo")
+    out("================================")
+    
+    (* Demonstrate library usage concepts *)
+    out("📚 Libraries declared:")
+    out("  - math_utils: Mathematical utilities")
+    out("  - web_framework: Web development framework")
+    out("  - data_structures: Data structure implementations")
+    
+    (* Demonstrate platform detection *)
+    platform = get_platform()
+    out("🖥️  Running on platform: " + platform)
+    
+    (* Demonstrate multi-target compilation *)
+    out("🔨 Build targets configured:")
+    out("  - native: Current platform optimized")
+    out("  - win: Windows executable")
+    out("  - linux: Linux executable")
+    out("  - macos: macOS executable")
+    
+    (* Example of what imported libraries might provide *)
+    out("📊 Example operations:")
+    out("  - math_utils.sqrt(16) = 4")
+    out("  - web_framework.serve(8080)")
+    out("  - data_structures.HashMap.new()")
+    
+    out("✅ Demo completed successfully!")
+
+(* Platform detection function *)
+def get_platform():
+    (* This would be implemented by the runtime *)
+    return "linux"  (* Placeholder *)
+
+(* Entry point *)
+if __name__ == "__main__":
+    main()

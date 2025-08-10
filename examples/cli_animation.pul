@@ -1,0 +1,107 @@
+# CLI Animation Demo in Pulse
+# Demonstrates terminal control, animations, and interactive prompts
+
+import terminal
+import time
+
+def create_loading_bar(duration, width=50):
+    """Create an animated loading bar"""
+    for i in range(width + 1):
+        progress = i / width
+        bar = "[" + "=" * i + " " * (width - i) + "]"
+        percentage = int(progress * 100)
+        
+        # Clear line and show progress
+        terminal.clear_line()
+        terminal.print(bar + " " + str(percentage) + "%")
+        
+        time.sleep(duration / width)
+    
+    terminal.print("\nLoading complete!")
+
+def create_spinner(duration, message="Processing"):
+    """Create a spinning animation"""
+    spinner_chars = ["|", "/", "-", "\\"]
+    start_time = time.now()
+    
+    while time.now() - start_time < duration:
+        for char in spinner_chars:
+            terminal.clear_line()
+            terminal.print(message + " " + char)
+            time.sleep(0.1)
+    
+    terminal.clear_line()
+    terminal.print(message + " Complete!")
+
+def create_progress_dots(message, duration, dot_count=3):
+    """Create animated dots"""
+    for i in range(dot_count + 1):
+        dots = "." * i
+        terminal.clear_line()
+        terminal.print(message + dots)
+        time.sleep(duration / (dot_count + 1))
+    
+    terminal.print("\n")
+
+def create_typing_effect(text, speed=0.05):
+    """Simulate typing effect"""
+    for char in text:
+        terminal.print(char, end="")
+        time.sleep(speed)
+    terminal.print()
+
+def create_menu():
+    """Create an interactive menu"""
+    options = [
+        "1. Loading Bar Animation",
+        "2. Spinner Animation", 
+        "3. Progress Dots",
+        "4. Typing Effect",
+        "5. Exit"
+    ]
+    
+    while True:
+        terminal.clear_screen()
+        terminal.print("=== Pulse CLI Animation Demo ===")
+        terminal.print()
+        
+        for option in options:
+            terminal.print(option)
+        
+        terminal.print()
+        choice = terminal.input("Select an option (1-5): ")
+        
+        match choice:
+            "1":
+                terminal.print("\nRunning Loading Bar...")
+                create_loading_bar(3.0)
+                terminal.input("\nPress Enter to continue...")
+            "2":
+                terminal.print("\nRunning Spinner...")
+                create_spinner(3.0, "Processing data")
+                terminal.input("\nPress Enter to continue...")
+            "3":
+                terminal.print("\nRunning Progress Dots...")
+                create_progress_dots("Loading", 2.0)
+                terminal.input("\nPress Enter to continue...")
+            "4":
+                terminal.print("\nRunning Typing Effect...")
+                create_typing_effect("Welcome to Pulse Programming Language! This demonstrates the typing effect.")
+                terminal.input("\nPress Enter to continue...")
+            "5":
+                terminal.print("Goodbye!")
+                break
+            _:
+                terminal.print("Invalid option. Press Enter to continue...")
+                terminal.input()
+
+def main():
+    terminal.clear_screen()
+    terminal.print("Welcome to Pulse CLI Animation Demo!")
+    terminal.print("This demonstrates terminal control and animations.")
+    terminal.print()
+    
+    create_menu()
+
+# Run the demo
+main() 

@@ -1,0 +1,19 @@
+# Hello World in Pulse
+# This demonstrates basic syntax, function definitions, and string operations
+
+def greet(name):
+    message = "Hello, " + name + "!"
+    out(message)
+
+def main():
+    greet("World")
+    greet("Pulse")
+    
+    # Demonstrate string concatenation
+    first = "Welcome to "
+    second = "Pulse Programming Language!"
+    full_message = first + second
+    out(full_message)
+
+# Run the main function
+main() 

@@ -1,0 +1,20 @@
+[project]
+name = "pulse-package-demo"
+version = "0.1.0"
+description = "Demonstration of Pulse Package Manager features"
+
+[dependencies]
+# Library dependencies declared in source code
+math_utils = "https://math-utils.pulse.dev"
+web_framework = "https://web-framework.pulse.dev"
+data_structures = "https://data-structs.pulse.dev"
+
+[build]
+# Build targets for multi-platform compilation
+targets = ["native", "win", "linux", "macos"]
+
+[libs]
+# External library declarations
+math_utils = "https://math-utils.pulse.dev"
+web_framework = "https://web-framework.pulse.dev"
+data_structures = "https://data-structs.pulse.dev"

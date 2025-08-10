@@ -1,0 +1,6 @@
+# Main entry point for the Pulse program
+def main():
+    out("Hello, Pulse!")
+
+if __name__ == "__main__":
+    main()

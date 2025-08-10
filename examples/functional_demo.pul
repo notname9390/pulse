@@ -1,0 +1,71 @@
+# Functional Programming Demo in Pulse
+# Demonstrates pattern matching, recursion, and functional concepts
+
+def factorial(n):
+    match n:
+        0: return 1
+        1: return 1
+        _: return n * factorial(n - 1)
+
+def fibonacci(n):
+    match n:
+        0: return 0
+        1: return 1
+        _: return fibonacci(n - 1) + fibonacci(n - 2)
+
+def sum_list(lst):
+    match lst:
+        []: return 0
+        [head, *tail]: return head + sum_list(tail)
+
+def map_list(func, lst):
+    match lst:
+        []: return []
+        [head, *tail]: return [func(head)] + map_list(func, tail)
+
+def filter_list(pred, lst):
+    match lst:
+        []: return []
+        [head, *tail]:
+            if pred(head):
+                return [head] + filter_list(pred, tail)
+            else:
+                return filter_list(pred, tail)
+
+def reduce_list(func, initial, lst):
+    match lst:
+        []: return initial
+        [head, *tail]: return reduce_list(func, func(initial, head), tail)
+
+# Test the functional utilities
+def main():
+    out("=== Functional Programming Demo ===")
+    
+    # Test factorial
+    out("Factorial of 5: " + str(factorial(5)))
+    out("Factorial of 10: " + str(factorial(10)))
+    
+    # Test fibonacci
+    out("Fibonacci of 10: " + str(fibonacci(10)))
+    
+    # Test list operations
+    numbers = [1, 2, 3, 4, 5]
+    out("Original list: " + str(numbers))
+    
+    # Sum
+    total = sum_list(numbers)
+    out("Sum: " + str(total))
+    
+    # Map (double each number)
+    doubled = map_list(lambda x: x * 2, numbers)
+    out("Doubled: " + str(doubled))
+    
+    # Filter (even numbers only)
+    evens = filter_list(lambda x: x % 2 == 0, numbers)
+    out("Evens: " + str(evens))
+    
+    # Reduce (product)
+    product = reduce_list(lambda x, y: x * y, 1, numbers)
+    out("Product: " + str(product))
+
+main() 

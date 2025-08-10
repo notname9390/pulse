@@ -1,0 +1,114 @@
+(* Pulse Programming Language - EBNF Grammar *)
+
+(* Program Structure *)
+program = { statement | function_def | class_def | import_stmt } EOF ;
+
+(* Import Statements *)
+import_stmt = "import" identifier { "." identifier } [ "as" identifier ] ";" ;
+
+(* Statements *)
+statement = assignment_stmt | expression_stmt | control_stmt | return_stmt | async_stmt | break_stmt | continue_stmt | try_stmt | raise_stmt ;
+
+assignment_stmt = identifier "=" expression ";" ;
+expression_stmt = expression ";" ;
+return_stmt = "return" [ expression ] ";" ;
+async_stmt = "async" function_def ;
+break_stmt = "break" ";" ;
+continue_stmt = "continue" ";" ;
+raise_stmt = "raise" [ expression ] ";" ;
+
+(* Control Flow *)
+control_stmt = if_stmt | while_stmt | for_stmt | match_stmt | switch_stmt | do_while_stmt ;
+
+if_stmt = "if" "(" expression ")" block { "elif" "(" expression ")" block } [ "else" block ] ;
+while_stmt = "while" "(" expression ")" block ;
+do_while_stmt = "do" block "while" "(" expression ")" ";" ;
+for_stmt = for_in_stmt | for_traditional_stmt ;
+for_in_stmt = "for" "(" identifier "in" expression ")" block ;
+for_traditional_stmt = "for" "(" [ expression ] ";" [ expression ] ";" [ expression ] ")" block ;
+switch_stmt = "switch" "(" expression ")" "{" { case_stmt } [ default_stmt ] "}" ;
+case_stmt = "case" expression ":" { statement } [ "break" ";" ] ;
+default_stmt = "default" ":" { statement } [ "break" ";" ] ;
+match_stmt = "match" "(" expression ")" "{" { pattern ":" block } "}" ;
+
+(* Try-Catch Blocks *)
+try_stmt = "try" block "catch" "(" identifier ")" block [ "finally" block ] ;
+
+(* Pattern Matching *)
+pattern = literal_pattern | identifier_pattern | tuple_pattern | list_pattern | wildcard_pattern ;
+literal_pattern = string | number | boolean | "None" ;
+identifier_pattern = identifier ;
+tuple_pattern = "(" [ pattern { "," pattern } ] ")" ;
+list_pattern = "[" [ pattern { "," pattern } ] "]" ;
+wildcard_pattern = "_" ;
+
+(* Blocks *)
+block = "{" { statement | function_def | class_def } "}" ;
+
+(* Function Definitions *)
+function_def = "def" identifier "(" [ parameter_list ] ")" [ "->" type_annotation ] block ;
+parameter_list = parameter { "," parameter } ;
+parameter = identifier [ ":" type_annotation ] [ "=" expression ] ;
+type_annotation = basic_type | function_type | generic_type | "void" ;
+
+(* Class Definitions *)
+class_def = "class" identifier [ "(" [ base_class ] ")" ] block ;
+base_class = identifier ;
+
+(* Types *)
+basic_type = "str" | "int" | "float" | "bool" | "list" | "tuple" | "dict" | "None" | "void" ;
+function_type = "(" [ type_annotation { "," type_annotation } ] ")" "->" type_annotation ;
+generic_type = basic_type "[" type_annotation { "," type_annotation } "]" ;
+
+(* Expressions *)
+expression = logical_or ;
+logical_or = logical_and { "||" logical_and } ;
+logical_and = equality { "&&" equality } ;
+equality = comparison { ("==" | "!=") comparison } ;
+comparison = term { ("<" | "<=" | ">" | ">=") term } ;
+term = factor { ("+" | "-") factor } ;
+factor = power { ("*" | "/" | "//" | "%") power } ;
+power = unary { "**" unary } ;
+unary = ("+" | "-" | "!" | "not") unary | primary ;
+primary = atom | call | attribute | subscription | slice ;
+
+(* Primary Expressions *)
+atom = identifier | literal | tuple_expr | list_expr | dict_expr | paren_expr ;
+call = primary "(" [ argument_list ] ")" ;
+attribute = primary "." identifier ;
+subscription = primary "[" expression "]" ;
+slice = primary "[" [ expression ] ":" [ expression ] [ ":" [ expression ] ] "]" ;
+paren_expr = "(" expression ")" ;
+
+(* Literals *)
+literal = string | number | boolean | "None" ;
+string = '"' { char } '"' | "'" { char } "'" ;
+number = integer | float ;
+integer = digit { digit } ;
+float = integer "." digit { digit } ;
+boolean = "true" | "false" ;
+char = ? any character except quote ? ;
+
+(* Collections *)
+tuple_expr = "(" [ expression { "," expression } ] ")" ;
+list_expr = "[" [ expression { "," expression } ] "]" ;
+dict_expr = "{" [ key_value { "," key_value } ] "}" ;
+key_value = expression ":" expression ;
+
+(* Function Calls *)
+argument_list = expression { "," expression } ;
+
+(* Identifiers *)
+identifier = letter { letter | digit | "_" } ;
+letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+
+(* Comments - Integrated into the grammar *)
+(* Single-line and multi-line comments are handled by the lexer *)
+
+(* Whitespace *)
+(* Whitespace is handled by the lexer, not the grammar *)
+(* Blocks use curly braces for explicit scope *)
+
+(* End of File *)
+EOF = ? end of input ? ; 

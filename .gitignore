@@ -1,0 +1,13 @@
+# Build artifacts
+build/
+*.o
+*.so
+*.dylib
+*.exe
+
+# Dependencies
+.pulse/
+
+# IDE files
+.vscode/
+.idea/
